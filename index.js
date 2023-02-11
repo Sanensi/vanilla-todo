@@ -12,13 +12,15 @@ const server = http.createServer(async (req, res) => {
  * @param {http.ServerResponse} res
  */
 const servePublicStaticFiles = async (req, res) => {
+  const path = req.url === "/" ? "/index.html" : req.url;
+
   try {
-    const file = await fs.readFile("./public" + req.url);
+    const file = await fs.readFile("./public" + path);
 
     res.end(file);
   } catch (e) {
     res.statusCode = 404;
-    res.end(`${req.url} not found`);
+    res.end(`${path} not found`);
   }
 };
 
