@@ -1,23 +1,17 @@
 import http from "http";
+import { GET_API_TODO, POST_API_TODO } from "./api.js";
+import { createHandlers } from "./handler.js";
 import { servePublicStaticFiles } from "./static.js";
 
 const PORT = 8080;
 
-const server = http.createServer(async (req, res) => {
-  if (req.url === "/api/todo" && req.method === "GET") {
-    res.setHeader("content-type", "application/json");
-    res.statusCode = 200;
-    res.end(JSON.stringify(["hello", "world"]));
-  } else if (req.url === "/api/todo" && req.method === "POST") {
-    res.setHeader("content-type", "application/json");
-    res.statusCode = 200;
-    res.end(
-      JSON.stringify(["hello", "world", "this is not quite what you expected"])
-    );
-  } else {
-    await servePublicStaticFiles(req, res);
-  }
-});
+const server = http.createServer(
+  createHandlers([
+    GET_API_TODO,
+    POST_API_TODO,
+    { predicate: () => true, handler: servePublicStaticFiles },
+  ])
+);
 
 server.listen(PORT, () => {
   console.log(`Listening on http://localhost:${PORT}`);
