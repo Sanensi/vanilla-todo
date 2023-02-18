@@ -6,12 +6,12 @@
 /**
  * @typedef Handler
  * @property {(req: IncomingMessage) => boolean} predicate
- * @property {async (req: IncomingMessage , res: ServerResponse) => void} handler
+ * @property {(req: IncomingMessage , res: ServerResponse) => Promise<void>} handler
  */
 
 /**
  * @param {Handler[]} handlers
- * @returns {(req: IncomingMessage , res: ServerResponse) => void}
+ * @returns {(req: IncomingMessage , res: ServerResponse) => Promise<void>}
  */
 export const createHandlers = (handlers) => async (req, res) => {
   for (const { predicate, handler } of handlers) {

@@ -31,7 +31,7 @@ function handleKeyDown(e) {
 function createTodo(todo) {
   fetch("/api/todo", {
     method: "post",
-    body: todo,
+    body: JSON.stringify(todo),
   })
     .then((r) => r.json())
     .then(renderTodos);
