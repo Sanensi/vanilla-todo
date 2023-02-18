@@ -6,18 +6,18 @@
 /**
  * @typedef Handler
  * @property {(req: IncomingMessage) => boolean} predicate
- * @property {(req: IncomingMessage , res: ServerResponse) => void} handler
+ * @property {async (req: IncomingMessage , res: ServerResponse) => void} handler
  */
 
 /**
  * @param {Handler[]} handlers
  * @returns {(req: IncomingMessage , res: ServerResponse) => void}
  */
-export const createHandlers = (handlers) => (req, res) => {
+export const createHandlers = (handlers) => async (req, res) => {
   for (const { predicate, handler } of handlers) {
     if (predicate(req)) {
       try {
-        return handler(req, res);
+        return await handler(req, res);
       } catch (e) {
         res.statusCode = 500;
         res.end(e.stack ?? e);
