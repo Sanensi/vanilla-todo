@@ -2,5 +2,8 @@
   "name": "vanilla-todo",
   "version": "1.0.0",
   "main": "index.js",
-  "type": "module"
+  "type": "module",
+  "scripts": {
+    "start": "npx nodemon ./server"
+  }
 }
