@@ -7,7 +7,7 @@ const server = http.createServer(async (req, res) => {
   if (req.url === "/api/todo" && req.method === "GET") {
     res.setHeader("content-type", "application/json");
     res.statusCode = 200;
-    res.end(JSON.stringify([]));
+    res.end(JSON.stringify(["hello", "world"]));
   } else {
     await servePublicStaticFiles(req, res);
   }
